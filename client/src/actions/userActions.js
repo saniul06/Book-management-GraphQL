@@ -194,5 +194,7 @@ export const login = (email, password, history) => async dispatch => {
 export const logout = () => async dispatch => {
 
     localStorage.removeItem("auth-token");
+    let token = localStorage.getItem('auth-token')
+    setAuthHeader(token)
     dispatch({ type: LOGOUT_SUCCESS })
 }

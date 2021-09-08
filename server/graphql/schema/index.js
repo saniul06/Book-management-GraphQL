@@ -57,7 +57,6 @@ module.exports = buildSchema(`
         type RootMutation {
             register(userInput: UserInput): Success!
             login(email: String!, password: String!): AuthData!
-            logout: Success!
             addBook(bookInput: BookInput): BookSuccess!
             addRating(bookId: ID!, rating: Int!): Success!
         }

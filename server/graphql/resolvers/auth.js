@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const User = require('../..//models/user')
 
 module.exports = {
-    register: async (args, req, res) => {
+    register: async (args) => {
         try {
 
             if (!args.userInput.email || !args.userInput.password) {
@@ -25,7 +25,7 @@ module.exports = {
             throw err
         }
     },
-    login: async ({ email, password }, context) => {
+    login: async ({ email, password }) => {
         try {
             const user = await User.findOne({ email }).select('+password')
             if (!user) {
@@ -39,26 +39,7 @@ module.exports = {
 
             const token = user.getJwtToken()
 
-            const options = {
-                expires: new Date(
-                    Date.now() + 24 * 60 * 60 * 1000 * 7,
-                ),
-                httpOnly: true
-            }
             return { success: true, userId: user._id, token: `Bearer ${token}` }
-
-        } catch (err) {
-            throw err
-        }
-
-    },
-    logout: (args, req) => {
-        try {
-            req.res.cookie('token', null, {
-                expires: new Date(Date.now()),
-                httpOnly: true
-            })
-            return { message: 'Logout successfully' }
 
         } catch (err) {
             throw err
