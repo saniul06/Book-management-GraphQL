@@ -21,6 +21,7 @@ npm start
 ```
 cd client
 npm i
+```
 
 ### Run Client (client)
 
@@ -28,6 +29,8 @@ npm i
 
 cd client
 npm start
+
+```
 
 ```
 
