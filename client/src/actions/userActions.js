@@ -94,18 +94,7 @@ export const addBook = (bookName, author, publishedYear, category, handleClose, 
 
 export const rateBook = (bookId, value, book, setAvgRating, setNumOfRating) => async (dispatch, getState) => {
     try {
-        let avg;
-        if (book.ratings && book.ratings.length > 0) {
-            avg = book.ratings.reduce((acc, item) => item.value + acc, value)
-            setAvgRating(avg / (book.ratings.length + 1))
-            setNumOfRating(prev => prev + 1)
-            book.ratings.push({ userId: getState().auth.userId, value })
 
-        } else {
-            setAvgRating(value)
-            setNumOfRating(1)
-            book.ratings.push({ userId: getState().auth.userId, value })
-        }
         dispatch({ type: RATE_BOOK_REQUEST })
         const requestBody = {
             query: `
@@ -120,6 +109,18 @@ export const rateBook = (bookId, value, book, setAvgRating, setNumOfRating) => a
 
         dispatch({ type: RATE_BOOK_SUCCESS, payload: fetch.data.data.addRating.message })
 
+        let avg;
+        if (book.ratings && book.ratings.length > 0) {
+            avg = book.ratings.reduce((acc, item) => item.value + acc, value)
+            setAvgRating(avg / (book.ratings.length + 1))
+            setNumOfRating(prev => prev + 1)
+            book.ratings.push({ userId: getState().auth.userId, value })
+
+        } else {
+            setAvgRating(value)
+            setNumOfRating(1)
+            book.ratings.push({ userId: getState().auth.userId, value })
+        }
 
 
 
