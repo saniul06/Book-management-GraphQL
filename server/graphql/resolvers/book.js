@@ -13,7 +13,7 @@ module.exports = {
     addBook: async (args, req) => {
         try {
             if (!req.isAuth) {
-                throw new Error("Unauthenticated user");
+                throw new Error("Login first to access this resource");
             }
 
             const bookName = args.bookInput.bookName
@@ -44,7 +44,7 @@ module.exports = {
     addRating: async ({ bookId, rating }, req) => {
         try {
             if (!req.isAuth) {
-                throw new Error("Unauthenticated user")
+                throw new Error("Login first to access this resource")
             }
 
             const book = await Book.findById(bookId)
